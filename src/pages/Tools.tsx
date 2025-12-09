@@ -21,7 +21,7 @@ const tools = [
     icon: Video,
     status: "available",
     features: ["Mock Interviews", "Response Analysis", "Body Language Tips", "Question Bank"],
-    link: "#",
+    link: "https://recruitix-eight.vercel.app/",
   },
   {
     id: 3,
