@@ -135,10 +135,17 @@ const Tools = () => {
                       </Button>
                     </Link>
                   ) : (
-                    <Button variant="gradient" className="w-full">
-                      Launch Tool
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
+                    <a
+                      href={tool.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button variant="gradient" className="w-full">
+                        Launch Tool
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </a>
                   )
                 ) : (
                   <Button variant="outline" className="w-full" disabled>
