@@ -24,7 +24,7 @@ const courses = [
     price: 99,
     duration: "3 Days",
     dates: "Dec 12th - 14th, 2025",
-    status: "live",
+    status: "completed",
     enrolled: "7+",
     rating: 4.9,
     topics: ["LLM Fundamentals", "Prompt Engineering", "Fine-tuning", "RAG Systems", "Deployment"],
