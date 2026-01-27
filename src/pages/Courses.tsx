@@ -12,7 +12,7 @@ const courses = [
     duration: "2 Days",
     dates: "Jan 29th - 30th, 2026",
     status: "live",
-    enrolled: "7+",
+    enrolled: "10+",
     rating: 4.9,
     topics: ["Figma", "Framer", "Graphics Design", "design to web", "Deployment"],
     registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSf2kEBwp5rcmSQsvRHieynpb6yYcmysnOsUmK321jzqv0YqeQ/viewform?usp=header",
