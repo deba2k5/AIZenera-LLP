@@ -71,7 +71,7 @@ const featuredCourses = [
     price: "₹99",
     status: "LIVE",
     date: "Jan 29th - 30th, 2026",
-    image: courseImg1,
+    image: cc,
     href: "/courses",
   },
   {
