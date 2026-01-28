@@ -14,6 +14,7 @@ import type { PointerEvent } from "react";
 import heroImg from "@/assets/1.png";
 import courseImg1 from "@/assets/3.png";
 import courseImg2 from "@/assets/2.png";
+import cc from "@/assets/Black White Simple Tech Carousel Instagram Post (1).png";
 import logo4 from "@/assets/4.png";
 import logo5 from "@/assets/5.png";
 import logo6 from "@/assets/6.png";
