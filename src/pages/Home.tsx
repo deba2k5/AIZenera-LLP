@@ -66,10 +66,10 @@ const testimonials = [
 ];
 const featuredCourses = [
   {
-    title: "LLM Masterclass",
+    title: "Figma & Framer Masterclass",
     price: "₹99",
     status: "LIVE",
-    date: "Dec 12th - 14th, 2024",
+    date: "Jan 29th - 30th, 2026",
     image: courseImg1,
     href: "/courses",
   },
@@ -77,7 +77,16 @@ const featuredCourses = [
     title: "GenAI Masterclass",
     price: "₹149",
     status: "COMPLETED",
-    date: "Oct 1st - 30th, 2024",
+    date: "DEC 13st - 17th, 2025",
+    image: courseImg2,
+    href: "/courses",
+  },
+  
+  {
+    title: "LLMs Masterclass",
+    price: "₹99",
+    status: "COMPLETED",
+    date: "DEC 1st - 30th, 2025",
     image: courseImg2,
     href: "/courses",
   },
