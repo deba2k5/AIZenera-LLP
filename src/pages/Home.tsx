@@ -290,8 +290,8 @@ const Home = () => {
               </motion.div>
 
               <motion.h1 variants={fade(0.1)}
-                className="font-black leading-[0.88] mb-8 tracking-tight"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(3.5rem, 8vw, 6.5rem)" }}
+                className="font-black leading-[0.9] mb-8 tracking-tighter"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(2.25rem, 12vw, 6.5rem)" }}
               >
                 <span className="text-white block">LEARN</span>
                 <span className="block whitespace-nowrap" style={{
@@ -333,20 +333,18 @@ const Home = () => {
               </motion.div>
             </div>
 
-            {/* ── RIGHT ── */}
-            <motion.div variants={fade(0.15)} className="hidden lg:block relative">
+            {/* ── RIGHT (Logo) ── */}
+            <motion.div variants={fade(0.15)} className="relative block">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full blur-[80px] pointer-events-none"
                 style={{ background: "radial-gradient(circle, rgba(109,40,217,0.22), transparent 70%)" }} />
 
               <motion.div
                 animate={{ y: [0, -22, 0], rotateY: [-6, 6, -6], scale: [1, 1.02, 1] }}
                 transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10"
+                className="relative z-10 w-[70vw] lg:w-full mx-auto"
               >
-                <img src={heroLogo} alt="AIZenera 3D Logo" className="w-full h-auto mix-blend-screen" />
+                <img src={heroLogo} alt="AIZenera 3D Logo" className="w-full h-auto mix-blend-screen drop-shadow-[0_0_50px_rgba(124,58,237,0.4)]" />
               </motion.div>
-
-
             </motion.div>
           </motion.div>
         </motion.div>
@@ -361,7 +359,7 @@ const Home = () => {
       </section>
 
       {/* ══════════════════ STATS ══════════════════ */}
-      <section className="relative py-24 px-6 lg:px-16 z-10">
+      <section className="relative py-12 md:py-24 px-6 lg:px-16 z-10">
         <div className="max-w-5xl mx-auto">
           <div className="h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent mb-20" />
           <motion.div
@@ -371,8 +369,8 @@ const Home = () => {
           >
             {stats.map((s, i) => (
               <motion.div key={i} variants={fade(i * 0.1)}>
-                <GlowCard className="p-8 flex items-center gap-6 cursor-default">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 border border-white/8"
+                <GlowCard className="p-5 md:p-8 flex items-center gap-4 md:gap-6 cursor-default">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center flex-shrink-0 border border-white/8"
                     style={{ background: `${s.color}18` }}>
                     <s.icon className="w-7 h-7" style={{ color: s.color }} />
                   </div>
@@ -421,7 +419,7 @@ const Home = () => {
       </section>
 
       {/* ══════════════════ COURSES ══════════════════ */}
-      <section className="py-24 px-6 lg:px-16 z-10 relative">
+      <section className="py-12 md:py-24 px-6 lg:px-16 z-10 relative">
         <div className="max-w-6xl mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}>
 
@@ -471,7 +469,7 @@ const Home = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="p-7 flex flex-col flex-1">
+                    <div className="p-5 md:p-7 flex flex-col flex-1">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-3xl font-black text-white group-hover:text-purple-300 transition-colors" style={{ fontFamily: "'Outfit', sans-serif" }}>{course.price}</span>
                         <span className="text-[10px] font-semibold text-white/20 uppercase tracking-widest">{course.date}</span>
@@ -628,7 +626,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           {/* Top glow line */}
           <div className="h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent mb-0.5" />
-          <div className="rounded-3xl border border-white/6 bg-[#0a0a16]/70 backdrop-blur-2xl p-12 lg:p-20 relative overflow-hidden">
+          <div className="rounded-3xl border border-white/6 bg-[#0a0a16]/70 backdrop-blur-2xl p-8 md:p-12 lg:p-20 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
             <div className="absolute -top-40 left-1/4 w-80 h-80 rounded-full blur-[100px] pointer-events-none opacity-8"
               style={{ background: "radial-gradient(circle, #7c3aed, transparent)" }} />

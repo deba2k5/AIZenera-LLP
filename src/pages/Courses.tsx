@@ -94,7 +94,7 @@ const Courses = () => {
                 className="md:col-span-6 lg:col-span-4"
               >
                 <GlowCard 
-                  className="p-10 h-full flex flex-col justify-between group cursor-pointer hover:bg-white/[0.02] transition-colors"
+                  className="p-6 md:p-10 h-full flex flex-col justify-between group cursor-pointer hover:bg-white/[0.02] transition-colors"
                   glowColor={course.color}
                 >
                   <div className="space-y-6">

@@ -47,16 +47,18 @@ export const Sidebar = () => {
   return (
     <>
       {/* Mobile Navbar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 py-4"
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-5 py-3.5"
         style={{
-          background: "linear-gradient(180deg, rgba(5,8,22,0.9) 0%, rgba(5,8,22,0.4) 100%)",
-          backdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          background: "rgba(10, 10, 20, 0.6)",
+          backdropFilter: "blur(24px)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
         }}
       >
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="AIZenera" className="h-7 w-auto object-contain" />
-          <span className="text-white font-display font-black tracking-wider text-lg">AIZENERA</span>
+        <div className="flex items-center gap-2.5">
+          <div className="p-1 px-1.5 rounded-lg bg-purple-600/10 border border-purple-500/20">
+            <img src={logo} alt="AIZenera" className="h-5 w-5 object-contain" />
+          </div>
+          <span className="text-white font-display font-black tracking-tight text-base uppercase">AIZENERA</span>
         </div>
         <motion.button
           onClick={() => setIsMobileOpen(!isMobileOpen)}

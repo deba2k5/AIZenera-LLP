@@ -136,7 +136,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Contact Input Module */}
           <div className="lg:col-span-8">
-            <GlowCard className="p-10" glowColor="rgba(139, 92, 246, 0.2)">
+            <GlowCard className="p-6 md:p-10" glowColor="rgba(139, 92, 246, 0.2)">
               <div className="flex items-center gap-4 mb-10">
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center">
                   <Sparkles className="w-6 h-6 text-purple-400" />
@@ -147,7 +147,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-3">
                     <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Entity Name</Label>
@@ -242,7 +242,7 @@ const Contact = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <GlowCard className="p-6 h-full flex items-center gap-6 group cursor-pointer" glowColor={info.color}>
+                  <GlowCard className="p-5 md:p-6 h-full flex items-center gap-4 md:gap-6 group cursor-pointer" glowColor={info.color}>
                     <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
                       <info.icon className="w-6 h-6 text-purple-400" />
                     </div>

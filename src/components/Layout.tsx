@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
+import { BottomNav } from "./BottomNav";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,7 +22,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       </div>
 
       <Sidebar />
-      <main className="flex-1 w-full overflow-x-hidden relative z-10 mx-auto max-w-[1600px]">
+      <BottomNav />
+      <main className="flex-1 w-full overflow-x-hidden relative z-10 mx-auto max-w-[1600px] pb-32 lg:pb-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}
