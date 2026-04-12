@@ -1,16 +1,16 @@
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
-import { getAuth, setPersistence, browserLocalPersistence, type Auth } from "firebase/auth";
+import { getAuth, setPersistence, browserLocalPersistence, signInAnonymously, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDQipy6mr-LnwWkVmOzRX2ggo8MlNhuQTg",
-  authDomain: "aizenera-e909b.firebaseapp.com",
-  projectId: "aizenera-e909b",
-  storageBucket: "aizenera-e909b.firebasestorage.app",
-  messagingSenderId: "743375221124",
-  appId: "1:743375221124:web:e2824588a319fc9a022dd1",
-  measurementId: "G-T5N8GCYNQW",
+  apiKey: "AIzaSyBIZZ5cFLgrYG7byA2lYMDTZFEAmV39FUc",
+  authDomain: "portfolio-8eb82.firebaseapp.com",
+  projectId: "portfolio-8eb82",
+  storageBucket: "portfolio-8eb82.firebasestorage.app",
+  messagingSenderId: "222015202664",
+  appId: "1:222015202664:web:c8d0dc81bc81bb211f22dd",
+  measurementId: "G-EEBJSX791Q"
 };
 
 let app: FirebaseApp;

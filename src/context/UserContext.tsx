@@ -17,19 +17,27 @@ type User = {
 
 type Ctx = {
   user: User | null;
-  updateUser: (partial: Partial<User>) => void;
-  resetUser: () => void;
+  loading: boolean;
+  updateUser: (partial: Partial<User>) => Promise<void>;
+  resetUser: () => Promise<void>;
 };
 const UserContext = createContext<Ctx | null>(null);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [uid, setUid] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
+      setLoading(true);
       if (!fbUser) {
-        await signInAnonymously(auth);
+        try {
+          await signInAnonymously(auth);
+        } catch (err) {
+          console.error("Auth failed", err);
+          setLoading(false);
+        }
         return;
       }
 
@@ -42,7 +50,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           setUser(null);
         }
       } catch (err) {
-        console.warn("Failed to load profile", err);
+        console.warn("Failed to load profile (check Firestore rules)", err);
+      } finally {
+        setLoading(false);
       }
     });
 
@@ -51,26 +61,29 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const value = useMemo<Ctx>(() => ({
     user,
-    updateUser: (partial) => {
-      setUser((prev) => {
-        const next = { ...(prev ?? {}), ...partial };
-        if (uid) {
-          setDoc(doc(db, "profiles", uid), next, { merge: true }).catch((err) => {
-            console.warn("Failed to persist profile", err);
-          });
-        }
-        return next;
-      });
-    },
-    resetUser: () => {
-      setUser(null);
+    loading,
+    updateUser: async (partial) => {
+      setUser((prev) => ({ ...(prev ?? {}), ...partial }));
       if (uid) {
-        setDoc(doc(db, "profiles", uid), {}, { merge: false }).catch(() => {
-          /* ignore */
-        });
+        try {
+          await setDoc(doc(db, "profiles", uid), partial, { merge: true });
+        } catch (err) {
+          console.error("Failed to persist profile", err);
+          throw err; // Propagate to UI for toast handling
+        }
       }
     },
-  }), [user, uid]);
+    resetUser: async () => {
+      setUser(null);
+      if (uid) {
+        try {
+          await setDoc(doc(db, "profiles", uid), {}, { merge: false });
+        } catch (err) {
+          console.error("Failed to reset profile", err);
+        }
+      }
+    },
+  }), [user, uid, loading]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

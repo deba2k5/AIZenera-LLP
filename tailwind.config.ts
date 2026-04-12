@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Orbitron', 'sans-serif'],
+        display: ['Outfit', 'Inter', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
       colors: {
@@ -51,21 +51,23 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-        },
+      },
+      borderWidth: {
+        '3': '3px',
+      },
+      boxShadow: {
+        'neo': '4px 4px 0px 0px rgba(99,102,241,0.8)',
+        'neo-sm': '2px 2px 0px 0px rgba(99,102,241,0.8)',
+        'glass': '0 8px 32px rgba(0,0,0,0.4)',
+        'glow': '0 0 40px rgba(99,102,241,0.35)',
+        'glow-pink': '0 0 40px rgba(236,72,153,0.35)',
+        'glow-cyan': '0 0 40px rgba(14,165,233,0.35)',
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        neo: "0px",
       },
       keyframes: {
         "accordion-down": {

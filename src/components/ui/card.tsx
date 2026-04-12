@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "gradient" | "glass";
+  variant?: "default" | "gradient" | "glass" | "neo";
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -11,10 +11,11 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        "rounded-xl border bg-card text-card-foreground transition-all duration-300",
-        variant === "default" && "border-border shadow-lg",
-        variant === "gradient" && "gradient-border border-0",
-        variant === "glass" && "glass-card",
+        "bg-card text-card-foreground transition-all duration-300",
+        variant === "default" && "rounded-xl border border-border shadow-lg",
+        variant === "gradient" && "rounded-xl gradient-border border-0",
+        variant === "glass" && "rounded-xl glass-card",
+        variant === "neo" && "rounded-none border-3 border-black shadow-neo hover:shadow-neo-hover",
         className
       )}
       {...props}

@@ -1,174 +1,187 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, Calendar, Clock, Users, Star, ArrowRight, Zap, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { GraduationCap, Calendar, Clock, Users, Star, ArrowRight } from "lucide-react";
+import { GlowCard } from "@/components/GlowCard";
+import { MeshBackground, ParticleCanvas, PageHeader } from "@/components/SceneContainer";
 
 const courses = [
   {
     id: 1,
-    title: "Figma & Framer Masterclass",
-    description: "Deep dive into Designing, styling, finishing, and building production-ready deisgn applications.",
-    price: 99,
+    title: "AI Tools Mastery Bootcamp",
+    description: "Automate repetitive tasks, boost productivity, and build smarter workflows instantly. 8 hours of work in 2.",
+    price: "149",
     duration: "2 Days",
-    dates: "Jan 29th - 30th, 2026",
-    status: "live",
-    enrolled: "6+",
-    rating: 4.9,
-    topics: ["Figma", "Framer", "Graphics Design", "design to web", "Deployment"],
-    registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSf2kEBwp5rcmSQsvRHieynpb6yYcmysnOsUmK321jzqv0YqeQ/viewform?usp=header",
+    enrolled: "500+",
+    rating: 5.0,
+    category: "Productivity",
+    color: "rgba(139, 92, 246, 0.5)",
+    featured: true,
+    topics: ["Prompt Engineering", "Automation", "Media AI"],
   },
   {
     id: 2,
-    title: "LLM Masterclass",
-    description: "Deep dive into Large Language Models, prompt engineering, fine-tuning, and building production-ready AI applications.",
-    price: 99,
-    duration: "3 Days",
-    dates: "Dec 12th - 14th, 2025",
-    status: "completed",
-    enrolled: "10+",
+    title: "Professional AI & ML Program",
+    description: "Industry-ready in 3 months with real projects, from Python foundations to advanced model deployment.",
+    price: "1499",
+    duration: "3 Months",
+    enrolled: "200+",
     rating: 4.9,
-    topics: ["LLM Fundamentals", "Prompt Engineering", "Fine-tuning", "RAG Systems", "Deployment"],
+    category: "Engineering",
+    color: "rgba(99, 102, 241, 0.5)",
+    featured: true,
+    topics: ["Python", "Machine Learning", "Deep Learning"],
   },
   {
     id: 3,
-    title: "GenAI Masterclass",
-    description: "Comprehensive course on Generative AI covering models, applications, and hands-on projects with real-world use cases.",
-    price: 149,
-    duration: "30 Days",
-    dates: "Oct 1st - 30th, 2024",
-    status: "completed",
-    enrolled: 8,
-    rating: 4.8,
-    topics: ["Generative Models", "Image Generation", "Text-to-X", "AI Applications", "Projects"],
+    title: "Figma & Framer Masterclass",
+    description: "Designing, styling, and building production-ready applications with modern design tools.",
+    price: "99",
+    duration: "2 Days",
+    enrolled: "65+",
+    rating: 4.9,
+    category: "Design",
+    color: "rgba(236, 72, 153, 0.5)",
   },
-  
+  {
+    id: 4,
+    title: "LLM Masterclass",
+    description: "Deep dive into Large Language Models, fine-tuning, and building production AI applications.",
+    price: "99",
+    duration: "3 Days",
+    enrolled: "110+",
+    rating: 4.9,
+    category: "LLMs",
+    color: "rgba(34, 197, 94, 0.4)",
+  },
+  {
+    id: 5,
+    title: "GenAI Fundamentals",
+    description: "Comprehensive course on Generative models, Image Generation, and Text-to-X applications.",
+    price: "149",
+    duration: "30 Days",
+    enrolled: "400+",
+    rating: 4.8,
+    category: "GenAI",
+    color: "rgba(249, 115, 22, 0.4)",
+  },
 ];
 
 const Courses = () => {
   return (
-    <div className="min-h-screen px-6 py-12 lg:px-12 lg:py-16">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 animate-slide-up">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-              <GraduationCap className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold">Our Courses</h1>
-              <p className="text-muted-foreground">Transform your career with industry-relevant skills</p>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-[#020205] font-sans text-white overflow-x-hidden relative">
+      <MeshBackground />
+      <ParticleCanvas />
 
-        {/* Course Grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {courses.map((course, index) => (
-            <Card
-              key={course.id}
-              variant="glass"
-              className={`group hover-lift animate-fade-in overflow-hidden ${course.status === "completed" ? "opacity-75" : ""}`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Status Bar */}
-              <div className={`h-2 ${
-                course.status === "live" 
-                  ? "bg-gradient-to-r from-green-500 to-emerald-500" 
-                  : course.status === "completed"
-                  ? "bg-gradient-to-r from-muted to-muted-foreground/30"
-                  : "bg-gradient-to-r from-primary to-accent"
-              }`} />
-              
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <Badge 
-                    variant={course.status === "live" ? "default" : "secondary"}
-                    className={`${
-                      course.status === "live" 
-                        ? "bg-green-500/20 text-green-500 border-green-500/30" 
-                        : course.status === "completed"
-                        ? "bg-muted text-muted-foreground"
-                        : "bg-accent/20 text-accent border-accent/30"
-                    }`}
-                  >
-                    {course.status === "live" ? "🔴 LIVE NOW" : course.status === "completed" ? "COMPLETED" : "COMING SOON"}
-                  </Badge>
-                  <span className={`text-2xl font-bold ${course.status === "completed" ? "text-muted-foreground" : "gradient-text"}`}>
-                    ₹{course.price}
-                  </span>
-                </div>
-                <CardTitle className="text-xl mt-4">{course.title}</CardTitle>
-                <CardDescription className="text-base">{course.description}</CardDescription>
-              </CardHeader>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
+        <PageHeader 
+          brand="Academic Frontier"
+          title="MASTER THE"
+          category="SINGULARITY"
+          subtitle="Equip your neural networks with highly sought-after AI skills. Build the future with real projects."
+        />
 
-              <CardContent className="space-y-4">
-                {/* Course Info */}
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Calendar className="w-4 h-4" />
-                    {course.dates}
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="w-4 h-4" />
-                    {course.duration}
-                  </div>
-                  {course.enrolled > 0 && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Users className="w-4 h-4" />
-                      {course.enrolled} enrolled
-                    </div>
-                  )}
-                  {course.rating > 0 && (
-                    <div className="flex items-center gap-2 text-yellow-500">
-                      <Star className="w-4 h-4 fill-current" />
-                      {course.rating}
-                    </div>
-                  )}
-                </div>
-
-                {/* Topics */}
-                <div className="flex flex-wrap gap-2">
-                  {course.topics.map((topic) => (
-                    <span 
-                      key={topic}
-                      className="px-2 py-1 text-xs bg-muted rounded-md text-muted-foreground"
-                    >
-                      {topic}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <Button 
-                  variant={course.status === "live" ? "gradient" : "outline"} 
-                  className="w-full mt-4"
-                  disabled={course.status === "completed"}
-                  onClick={() => course.registrationLink && window.open(course.registrationLink, "_blank")}
+        {/* Course Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+          <AnimatePresence mode="popLayout">
+            {courses.map((course, idx) => (
+              <motion.div
+                key={course.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: idx * 0.05 }}
+                className={`${course.featured ? "md:col-span-8 lg:col-span-8" : "md:col-span-4 lg:col-span-4"}`}
+              >
+                <GlowCard 
+                  className="p-8 h-full flex flex-col justify-between group cursor-pointer"
+                  glowColor={course.color}
                 >
-                  {course.status === "live" ? (
-                    <>Register Now <ArrowRight className="w-4 h-4" /></>
-                  ) : course.status === "completed" ? (
-                    "Course Ended"
-                  ) : (
-                    "Notify Me"
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/5 group-hover:border-purple-500/50 transition-all">
+                          <GraduationCap className="w-5 h-5 text-purple-400" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-purple-400/80">
+                          {course.category}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {course.featured && (
+                          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-600/10 border border-purple-500/30">
+                            <Zap className="w-3 h-3 text-purple-400 fill-purple-400 animate-pulse" />
+                            <span className="text-[9px] font-black uppercase tracking-widest text-purple-400">Featured</span>
+                          </div>
+                        )}
+                        <span className="text-2xl font-black tracking-tighter">₹{course.price}</span>
+                      </div>
+                    </div>
+
+                    <h2 className={`${course.featured ? "text-4xl" : "text-2xl"} font-black tracking-tighter leading-tight group-hover:text-purple-400 transition-colors`}>
+                      {course.title}
+                    </h2>
+                    
+                    <p className={`text-white/40 font-medium ${course.featured ? "text-lg max-w-xl" : "text-sm"} leading-relaxed`}>
+                      {course.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {course.topics?.map(topic => (
+                        <span key={topic} className="px-3 py-1 text-[9px] font-black uppercase tracking-widest bg-white/[0.02] border border-white/5 rounded-full text-white/30">
+                          {topic}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-6 mt-8">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center gap-2 text-white/30 text-xs font-bold">
+                        <Clock className="w-3.5 h-3.5" /> {course.duration}
+                      </div>
+                      <div className="flex items-center gap-2 text-white/30 text-xs font-bold">
+                        <Users className="w-3.5 h-3.5" /> {course.enrolled}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                      <div className="flex items-center gap-1">
+                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                        <span className="text-xs font-black">{course.rating}</span>
+                      </div>
+                      <Button className="h-12 w-12 rounded-full p-0 bg-white shadow-xl hover:bg-purple-600 group transition-all">
+                        <ArrowRight className="w-5 h-5 text-black group-hover:text-white transition-colors" />
+                      </Button>
+                    </div>
+                  </div>
+                </GlowCard>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
-        {/* Custom Course Request */}
-        <Card variant="gradient" className="mt-12">
-          <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-display font-bold mb-2">Want a Custom Course?</h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              We offer customized training programs for colleges and organizations. 
-              Contact us to discuss your requirements.
-            </p>
-            <Button variant="glow" size="lg">Contact for Custom Training</Button>
-          </CardContent>
-        </Card>
+        {/* Corporate Section */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-24"
+        >
+          <GlowCard className="p-16 text-center lg:text-left overflow-hidden relative" glowColor="rgba(99, 102, 241, 0.2)">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+              <div className="max-w-2xl">
+                <Sparkles className="w-12 h-12 text-indigo-400 mb-8 mx-auto lg:mx-0" />
+                <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 leading-none">Custom Neural <br />Training for Orgs</h2>
+                <p className="text-white/40 text-lg font-medium leading-relaxed">
+                  We design end-to-end AI curriculum for universities and organizations. 
+                  Upscale your team with production-ready AI mastery.
+                </p>
+              </div>
+              <Button className="h-20 px-12 rounded-2xl bg-white text-black font-black uppercase tracking-[0.3em] text-[11px] hover:bg-indigo-600 hover:text-white transition-all shadow-2xl">
+                Request Archives
+              </Button>
+            </div>
+          </GlowCard>
+        </motion.div>
       </div>
     </div>
   );

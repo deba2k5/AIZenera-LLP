@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Info, Target, Heart, Zap, Users, Award, ArrowRight, Calendar, Briefcase, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/aizenera-logo.png";
+import logo from "@/assets/pic3d.png";
 import myPic from "@/assets/my pic.jpg";
 
 const values = [

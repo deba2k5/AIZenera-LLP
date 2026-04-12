@@ -1,177 +1,176 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Wrench, FileText, Video, Calculator, Brain, Code, ArrowRight, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Wrench, FileText, Video, Calculator, Brain, Code, ArrowRight, Sparkles, Zap, Cpu, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { GlowCard } from "@/components/GlowCard";
+import { MeshBackground, ParticleCanvas, PageHeader } from "@/components/SceneContainer";
 
 const tools = [
   {
     id: 1,
     title: "Resume Analyzer",
-    description: "Get AI-powered feedback on your resume. Analyze ATS compatibility, identify improvements, and optimize for job applications.",
+    description: "AI-powered feedback on your neural professional profiles. High ATS integration.",
     icon: FileText,
     status: "available",
-    features: ["ATS Score Analysis", "Keyword Suggestions", "Format Check", "Industry Tips"],
-    link: "#",
+    category: "Career",
+    color: "rgba(139, 92, 246, 0.4)", // Purple
+    size: "medium"
   },
   {
     id: 2,
-    title: "AI Interview Practice",
-    description: "Practice interviews with our AI interviewer. Get real-time feedback, improve your responses, and build confidence.",
+    title: "AI Interview Bot",
+    description: "Simulate high-stakes technical transmissions with real-time response analysis.",
     icon: Video,
     status: "available",
-    features: ["Mock Interviews", "Response Analysis", "Body Language Tips", "Question Bank"],
-    link: "https://recruitix-eight.vercel.app/",
+    category: "Prep",
+    color: "rgba(236, 72, 153, 0.4)", // Pink
+    size: "medium",
+    link: "https://recruitix-eight.vercel.app/"
   },
   {
     id: 3,
-    title: "GPA Calculator",
-    description: "Calculate your semester GPA and CGPA easily. Supports various grading systems used in Indian colleges.",
+    title: "GPA Processor",
+    description: "Calculate semester indices with precision grading logic for Indian institutions.",
     icon: Calculator,
     status: "available",
-    features: ["Semester GPA", "CGPA Calculation", "Multiple Grade Scales", "Export Results"],
-    link: "/gpa-calculator",
+    category: "Academic",
+    color: "rgba(34, 197, 94, 0.4)", // Emerald
+    size: "small",
+    link: "/gpa-calculator"
   },
   {
     id: 4,
-    title: "AI Code Assistant",
-    description: "Get help with coding problems, debug your code, and learn best practices with our AI coding assistant.",
+    title: "Neural Code Assistant",
+    description: "Debug, optimize, and refactor scripts using state-of-the-art inference engines.",
     icon: Code,
     status: "coming",
-    features: ["Code Review", "Bug Detection", "Best Practices", "Multiple Languages"],
-    link: "#",
+    category: "Dev",
+    color: "rgba(59, 130, 246, 0.4)", // Blue
+    size: "large"
   },
   {
     id: 5,
-    title: "AI Study Planner",
-    description: "Create personalized study plans based on your goals, available time, and learning pace.",
+    title: "Cognitive Study Planner",
+    description: "Dynamic schedule synthesis based on personalized learning velocity and goals.",
     icon: Brain,
     status: "coming",
-    features: ["Custom Plans", "Progress Tracking", "Reminders", "Adaptive Learning"],
-    link: "#",
+    category: "Focus",
+    color: "rgba(249, 115, 22, 0.4)", // Orange
+    size: "medium"
   },
   {
     id: 6,
-    title: "Project Idea Generator",
-    description: "Get AI-generated project ideas based on your skills, interests, and the technologies you want to learn.",
+    title: "Concept Generator",
+    description: "Rapidly ideate project foundations through skill-indexed brainstorming algorithms.",
     icon: Sparkles,
     status: "coming",
-    features: ["Skill-Based Ideas", "Difficulty Levels", "Resource Links", "Team Matching"],
-    link: "#",
+    category: "Ideate",
+    color: "rgba(168, 85, 247, 0.4)", // Lavender
+    size: "medium"
   },
 ];
 
 const Tools = () => {
   return (
-    <div className="min-h-screen px-6 py-12 lg:px-12 lg:py-16">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 animate-slide-up">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-              <Wrench className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold">Tools</h1>
-              <p className="text-muted-foreground">AI-powered tools to boost your productivity</p>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-[#020205] font-sans text-white overflow-x-hidden relative">
+      <MeshBackground />
+      <ParticleCanvas />
 
-        {/* Tools Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tools.map((tool, index) => (
-            <Card 
-              key={tool.id} 
-              variant="glass" 
-              className={`group hover-lift animate-fade-in overflow-hidden ${tool.status === "coming" ? "opacity-80" : ""}`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Status Bar */}
-              <div className={`h-1 ${
-                tool.status === "available" 
-                  ? "bg-gradient-to-r from-green-500 to-emerald-500" 
-                  : "bg-gradient-to-r from-primary to-accent"
-              }`} />
-              
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <tool.icon className="w-6 h-6 text-primary" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
+        <PageHeader 
+          brand="Utility Manifest"
+          title="NEURAL"
+          category="TOOLKIT"
+          subtitle="Advanced AI utilities designed to optimize your cognitive performance and academic output."
+        />
+
+        {/* Tools bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+          <AnimatePresence>
+            {tools.map((tool, idx) => (
+              <motion.div
+                key={tool.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                className={`flex ${
+                  tool.size === "large" ? "md:col-span-12 lg:col-span-8" : 
+                  tool.size === "medium" ? "md:col-span-6" : "md:col-span-4"
+                }`}
+              >
+                <GlowCard 
+                  className={`p-10 w-full flex flex-col justify-between group h-full ${tool.status === 'coming' ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                  glowColor={tool.color}
+                >
+                  <div className="space-y-8">
+                    <div className="flex items-center justify-between">
+                      <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center group-hover:bg-white/10 group-hover:border-purple-500/50 transition-all">
+                        <tool.icon className="w-7 h-7 text-purple-400" />
+                      </div>
+                      <div className={`px-4 py-1.5 rounded-full border text-[9px] font-black uppercase tracking-widest ${
+                        tool.status === 'available' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-white/5 border-white/5 text-white/20'
+                      }`}>
+                        {tool.status === 'available' ? 'ONLINE' : 'STAGING'}
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-500 mb-3 block">
+                        {tool.category}
+                      </span>
+                      <h2 className={`${tool.size === 'large' ? 'text-4xl' : 'text-2xl'} font-black tracking-tighter leading-tight mb-4 group-hover:text-white transition-colors`}>
+                        {tool.title}
+                      </h2>
+                      <p className={`text-white/40 font-medium ${tool.size === 'large' ? 'text-lg leading-relaxed max-w-2xl' : 'text-sm'}`}>
+                        {tool.description}
+                      </p>
+                    </div>
                   </div>
-                  <Badge 
-                    className={tool.status === "available" 
-                      ? "bg-green-500/20 text-green-500 border-green-500/30"
-                      : "bg-primary/20 text-primary border-primary/30"
-                    }
-                  >
-                    {tool.status === "available" ? "Available" : "Coming Soon"}
-                  </Badge>
-                </div>
-                <CardTitle className="text-xl mt-4">{tool.title}</CardTitle>
-                <CardDescription>{tool.description}</CardDescription>
-              </CardHeader>
 
-              <CardContent className="space-y-4">
-                {/* Features */}
-                <div className="flex flex-wrap gap-2">
-                  {tool.features.map((feature) => (
-                    <span 
-                      key={feature}
-                      className="px-2 py-1 text-xs bg-muted rounded-md text-muted-foreground"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                {tool.status === "available" ? (
-                  tool.link.startsWith("/") ? (
-                    <Link to={tool.link}>
-                      <Button variant="gradient" className="w-full">
-                        Launch Tool
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </Link>
-                  ) : (
-                    <a
-                      href={tool.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <Button variant="gradient" className="w-full">
-                        Launch Tool
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </a>
-                  )
-                ) : (
-                  <Button variant="outline" className="w-full" disabled>
-                    Coming Soon
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="pt-10 mt-10 border-t border-white/5 flex items-center justify-between">
+                    {tool.status === 'available' ? (
+                      tool.link?.startsWith('/') ? (
+                        <Link to={tool.link} className="w-full">
+                          <Button className="w-full h-14 rounded-2xl bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] hover:bg-purple-600 hover:text-white transition-all">
+                            Initialize Engine <ArrowRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </Link>
+                      ) : (
+                        <a href={tool.link} target="_blank" className="w-full">
+                          <Button className="w-full h-14 rounded-2xl bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] hover:bg-purple-600 hover:text-white transition-all">
+                            Initialize Engine <ArrowRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </a>
+                      )
+                    ) : (
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white/10 w-full text-center py-4 rounded-xl bg-white/[0.02] border border-white/5">
+                        Feature Encrypted
+                      </span>
+                    )}
+                  </div>
+                </GlowCard>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
-        {/* Request Tool */}
-        <Card variant="gradient" className="mt-12">
-          <CardContent className="p-8 text-center">
-            <Sparkles className="w-12 h-12 mx-auto mb-4 text-primary" />
-            <h3 className="text-2xl font-display font-bold mb-2">Have a Tool Idea?</h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              We're constantly building new tools to help students and engineers. 
-              If you have an idea for a tool that would be useful, let us know!
+        {/* Suggest Tool */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="mt-24 pt-24 border-t border-white/5"
+        >
+          <GlowCard className="p-16 text-center" glowColor="rgba(34, 197, 94, 0.1)">
+            <Cpu className="w-16 h-16 text-emerald-500 mx-auto mb-8 animate-pulse" />
+            <h2 className="text-5xl font-black tracking-tighter mb-6">Need a custom algorithm?</h2>
+            <p className="text-white/40 max-w-xl mx-auto mb-10 text-lg font-medium leading-relaxed">
+              We're constantly expanding the toolkit. If your workflow requires a specific automated protocol, send us your requirements.
             </p>
-            <Button variant="glow" size="lg">
-              Suggest a Tool
-              <ArrowRight className="w-4 h-4" />
+            <Button className="h-16 px-12 rounded-2xl bg-white text-black font-black uppercase tracking-[0.3em] text-[10px] hover:bg-emerald-600 hover:text-white transition-all shadow-2xl">
+              Submit Tool Request
             </Button>
-          </CardContent>
-        </Card>
+          </GlowCard>
+        </motion.div>
       </div>
     </div>
   );
