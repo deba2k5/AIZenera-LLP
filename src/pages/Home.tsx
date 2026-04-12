@@ -52,7 +52,7 @@ const featuredCourses = [
     status: "LIVE", 
     date: "2 Days (2 Hours)", 
     image: courseImg1, 
-    href: "/courses" 
+    href: "https://forms.gle/8oUDjjn9xJAymuqa9" 
   },
   { 
     title: "Professional AI & ML Mastery Program", 
@@ -61,7 +61,7 @@ const featuredCourses = [
     status: "LIVE", 
     date: "3 Months", 
     image: courseImg2, 
-    href: "/courses" 
+    href: "https://forms.gle/UJGdZPCfnHmRaP489" 
   },
 ];
 
@@ -479,13 +479,23 @@ const Home = () => {
                       <h3 className="text-base font-bold text-white/80 mb-6 leading-snug group-hover:text-white transition-colors">{course.title}</h3>
                       <div className="mt-auto">
                         {course.status === "LIVE" ? (
-                          <Link to={course.href}>
-                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                              className="w-full py-3.5 rounded-xl text-sm font-bold text-white border border-purple-500/30 bg-purple-950/20 hover:bg-purple-900/30 hover:border-purple-400/50 transition-all flex items-center justify-center gap-2"
-                            >
-                              Enroll Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </motion.button>
-                          </Link>
+                          course.href.startsWith("http") ? (
+                            <a href={course.href} target="_blank" rel="noopener noreferrer" className="w-full">
+                              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                                className="w-full py-3.5 rounded-xl text-sm font-bold text-white border border-purple-500/30 bg-purple-950/20 hover:bg-purple-900/30 hover:border-purple-400/50 transition-all flex items-center justify-center gap-2"
+                              >
+                                Enroll Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                              </motion.button>
+                            </a>
+                          ) : (
+                            <Link to={course.href} className="w-full">
+                              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                                className="w-full py-3.5 rounded-xl text-sm font-bold text-white border border-purple-500/30 bg-purple-950/20 hover:bg-purple-900/30 hover:border-purple-400/50 transition-all flex items-center justify-center gap-2"
+                              >
+                                Enroll Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                              </motion.button>
+                            </Link>
+                          )
                         ) : (
                           <button disabled className="w-full py-3.5 rounded-xl text-xs font-bold text-white/20 border border-white/5 cursor-not-allowed">
                             COURSE CONCLUDED

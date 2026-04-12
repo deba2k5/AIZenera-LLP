@@ -10,6 +10,7 @@ const courses = [
     title: "AI Tools Mastery Bootcamp",
     description: "Automate repetitive tasks, boost productivity, and build smarter workflows instantly. 8 hours of work in 2.",
     price: "149",
+    link: "https://forms.gle/8oUDjjn9xJAymuqa9",
     duration: "2 Days",
     enrolled: "500+",
     rating: 5.0,
@@ -23,6 +24,7 @@ const courses = [
     title: "Professional AI & ML Program",
     description: "Industry-ready in 3 months with real projects, from Python foundations to advanced model deployment.",
     price: "1499",
+    link: "https://forms.gle/UJGdZPCfnHmRaP489",
     duration: "3 Months",
     enrolled: "200+",
     rating: 4.9,
@@ -148,9 +150,11 @@ const Courses = () => {
                         <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
                         <span className="text-xs font-black">{course.rating}</span>
                       </div>
-                      <Button className="h-12 w-12 rounded-full p-0 bg-white shadow-xl hover:bg-purple-600 group transition-all">
-                        <ArrowRight className="w-5 h-5 text-black group-hover:text-white transition-colors" />
-                      </Button>
+                      <a href={(course as any).link || "#"} target={(course as any).link ? "_blank" : "_self"} rel="noopener noreferrer">
+                        <Button className="h-12 w-12 rounded-full p-0 bg-white shadow-xl hover:bg-purple-600 group transition-all">
+                          <ArrowRight className="w-5 h-5 text-black group-hover:text-white transition-colors" />
+                        </Button>
+                      </a>
                     </div>
                   </div>
                 </GlowCard>
