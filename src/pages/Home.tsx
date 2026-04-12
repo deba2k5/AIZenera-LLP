@@ -17,8 +17,8 @@ import { GlowCard } from "@/components/GlowCard";
 
 import heroLogo from "@/assets/pic3d.png";
 import heroVideo from "@/assets/Logo_Based_Background_Video_Idea.mp4";
-import courseImg2 from "@/assets/2.png";
-import cc from "@/assets/Black White Simple Tech Carousel Instagram Post (1).png";
+import courseImg1 from "@/assets/Untitled design (32).png";
+import courseImg2 from "@/assets/Untitled design (34).png";
 import logo4 from "@/assets/4.png";
 import logo5 from "@/assets/5.png";
 import logo6 from "@/assets/6.png";
@@ -51,7 +51,7 @@ const featuredCourses = [
     price: "₹149", 
     status: "LIVE", 
     date: "2 Days (2 Hours)", 
-    image: courseImg2, 
+    image: courseImg1, 
     href: "/courses" 
   },
   { 
@@ -60,7 +60,7 @@ const featuredCourses = [
     price: "₹1499", 
     status: "LIVE", 
     date: "3 Months", 
-    image: cc, 
+    image: courseImg2, 
     href: "/courses" 
   },
 ];

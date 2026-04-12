@@ -89,10 +89,10 @@ const Courses = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.05 }}
-                className={`${course.featured ? "md:col-span-8 lg:col-span-8" : "md:col-span-4 lg:col-span-4"}`}
+                className="md:col-span-6 lg:col-span-4"
               >
                 <GlowCard 
-                  className="p-8 h-full flex flex-col justify-between group cursor-pointer"
+                  className="p-10 h-full flex flex-col justify-between group cursor-pointer hover:bg-white/[0.02] transition-colors"
                   glowColor={course.color}
                 >
                   <div className="space-y-6">
