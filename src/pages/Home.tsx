@@ -47,10 +47,6 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               <p className="absolute bottom-5 left-5 right-5 font-serif text-lg italic text-white/90 sm:text-xl">“Where ideas meet the screen.”</p>
             </div>
-            <div className="absolute -right-2 -top-4 hidden rounded-2xl bg-ink px-4 py-3 text-ivory shadow-xl sm:block [animation-delay:1s] animate-float">
-              <p className="text-[11px] uppercase tracking-label text-white/50">Stack</p>
-              <p className="font-serif text-lg italic">Design × Code × AI</p>
-            </div>
           </div>
         </div>
       </section>
