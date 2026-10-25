@@ -1,290 +1,145 @@
-import { useState, memo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Send, MessageCircle, Clock, Linkedin, Instagram, Youtube, Sparkles, Shield, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import { db, auth } from "@/lib/firebase";
-import { signInAnonymously } from "firebase/auth";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import emailjs from "@emailjs/browser";
-import { GlowCard } from "@/components/GlowCard";
-import { MeshBackground, ParticleCanvas, PageHeader } from "@/components/SceneContainer";
+import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ArrowRight, CheckCircle2, AlertCircle, Loader2, Mail, Phone, MapPin } from "lucide-react";
+import { useSeo } from "../lib/hooks";
+import { site, budgets, timelines } from "../config/site";
+import { services } from "../data/services";
+import { industries } from "../data/industries";
 
-const contactInfo = [
-  { icon: Mail, label: "Neural Inbox", value: "info@aizenera.com", href: "mailto:info@aizenera.com", color: "rgba(139, 92, 246, 0.4)" },
-  { icon: Phone, label: "Direct Uplink", value: "+91 6290277345", href: "tel:+916290277345", color: "rgba(99, 102, 241, 0.4)" },
-  { icon: MapPin, label: "Command Center", value: "Kolkata, India", href: "#", color: "rgba(236, 72, 153, 0.4)" },
-  { icon: Clock, label: "Sync Latency", value: "Within 24 hours", href: "#", color: "rgba(34, 197, 94, 0.4)" },
-];
+type Fields = { name: string; email: string; company: string; phone: string; service: string; industry: string; budget: string; timeline: string; message: string; consent: boolean };
+type Status = "idle" | "sending" | "success" | "error";
 
-const socials = [
-  { icon: MessageCircle, label: "WhatsApp", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Instagram, label: "Instagram", href: "#" },
-  { icon: Youtube, label: "YouTube", href: "#" },
-];
+export default function Contact() {
+  useSeo("Contact", `Start a project with ${site.name}. Tell us what you're planning.`);
+  const [params] = useSearchParams();
+  const pre = services.find((s) => s.slug === params.get("service"))?.title ?? "";
+  const [f, setF] = useState<Fields>({ name: "", email: "", company: "", phone: "", service: pre, industry: "", budget: "", timeline: "", message: "", consent: false });
+  const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
+  const [status, setStatus] = useState<Status>("idle");
+  const [botField, setBotField] = useState("");
 
-const Contact = () => {
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  const set = (k: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    setF({ ...f, [k]: e.target.type === "checkbox" ? (e.target as HTMLInputElement).checked : e.target.value });
 
-  useEffect(() => {
-    // Initialize EmailJS with the Public Key on mount
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '2sVHcOgC1K3vKX3dG';
-    emailjs.init(publicKey);
-  }, []);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  function validate() {
+    const e: typeof errors = {};
+    if (f.name.trim().length < 2) e.name = "Please enter your full name.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = "Please enter a valid email address.";
+    if (f.phone && !/^[+\d\s()-]{7,20}$/.test(f.phone)) e.phone = "Please enter a valid phone number.";
+    if (!f.service) e.service = "Please choose a service.";
+    if (f.message.trim().length < 20) e.message = "Please describe your project (at least 20 characters).";
+    if (!f.consent) e.consent = "Please accept the privacy policy to continue.";
+    setErrors(e);
+    return e;
+  }
 
-  const handleSubjectChange = (value: string) => {
-    setFormData({ ...formData, subject: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      // SILENT AUTH: Ensure we have a session for Firebase interactions
-      if (!auth.currentUser) {
-        try {
-          await signInAnonymously(auth);
-        } catch (authError) {
-          console.warn("Silent Auth failed", authError);
-        }
-      }
-
-      // 1. Save to Firestore (Database Record)
-      // We wrap this in a sub-try-catch so that database permission issues 
-      // do not block the primary goal: sending the email to the admin.
-      try {
-        const contactsCollection = collection(db, "contacts");
-        await addDoc(contactsCollection, {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || "Not provided",
-          subject: formData.subject,
-          message: formData.message,
-          timestamp: serverTimestamp(),
-        });
-      } catch (dbError) {
-        console.error("Database Log Error (Handled):", dbError);
-        // We continue to EmailJS regardless of DB failure
-      }
-
-      // 2. Transmit via EmailJS (Direct Notification)
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        phone: formData.phone || "Not provided",
-        subject: formData.subject,
-        message: formData.message,
-        reply_to: formData.email,
-      };
-
-      const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "AIZenera";
-      const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_e3qm4lm";
-      const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "2sVHcOgC1K3vKX3dG";
-
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
-
-      toast({
-        title: "SIGNAL TRANSMITTED",
-        description: "Your message has been synchronized with our command center.",
-      });
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    } catch (error: any) {
-      console.error("Transmission Error:", error);
-      toast({
-        title: "TRANSMISSION FAILED",
-        description: error.message?.includes("permission") 
-          ? "Database locked. Please contact info@aizenera.com directly."
-          : "External interference detected. Please try the secondary uplink.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+  async function onSubmit(ev: React.FormEvent) {
+    ev.preventDefault();
+    const e = validate();
+    if (Object.keys(e).length) {
+      document.getElementById(`f-${Object.keys(e)[0]}`)?.focus();
+      return;
     }
-  };
+    if (botField) return; // spam honeypot
+    setStatus("sending");
+    try {
+      const res = await fetch(site.formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `New project inquiry from ${f.name}`,
+          _template: "table",
+          _captcha: "false",
+          Name: f.name, Email: f.email, Company: f.company || "—", Phone: f.phone || "—",
+          Service: f.service, Industry: f.industry || "—", Budget: f.budget || "—", Timeline: f.timeline || "—",
+          Message: f.message,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false || data.success === "false") throw new Error(data.message || "Submission failed");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const err = (k: keyof Fields) => errors[k] && <p id={`e-${k}`} className="mt-1.5 flex items-center gap-1.5 text-sm text-red-600"><AlertCircle size={14} />{errors[k]}</p>;
+  const a11y = (k: keyof Fields) => ({ id: `f-${k}`, "aria-invalid": !!errors[k], "aria-describedby": errors[k] ? `e-${k}` : undefined });
 
   return (
-    <div className="min-h-screen bg-[#020205] font-sans text-white overflow-x-hidden relative">
-      <MeshBackground />
-      <ParticleCanvas />
+    <section className="relative overflow-hidden">
+      <div className="pointer-events-none absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-accent/10 blur-3xl" />
+      <div className="container-site relative grid gap-14 py-16 sm:py-24 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <p className="eyebrow animate-rise">Contact</p>
+          <h1 className="h-display mt-6 animate-rise">Let’s make something <em className="text-accent">meaningful</em>.</h1>
+          <p className="lead mt-7 animate-rise">Have a project in mind, or just exploring options? Share a few details and we’ll get back to you with next steps.</p>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
-        <PageHeader 
-          brand="Communication Protocol"
-          title="CONTACT"
-          category="TERMINAL"
-          subtitle="Initialize a high-bandwidth connection with the Zenera engineering team. No intermediaries."
-        />
+          <ul className="mt-10 space-y-4">
+            <li><a href={`mailto:${site.email}`} className="group flex items-center gap-4"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-ivory"><Mail size={18} /></span><span className="text-lg group-hover:text-accent">{site.email}</span></a></li>
+            {site.phone && <li className="flex items-center gap-4"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-ivory"><Phone size={18} /></span><a href={`tel:${site.phone}`} className="text-lg">{site.phone}</a></li>}
+            {site.location && <li className="flex items-center gap-4"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-ivory"><MapPin size={18} /></span><span className="text-lg">{site.location}</span></li>}
+          </ul>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Contact Input Module */}
-          <div className="lg:col-span-8">
-            <GlowCard className="p-6 md:p-10" glowColor="rgba(139, 92, 246, 0.2)">
-              <div className="flex items-center gap-4 mb-10">
-                <div className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-purple-400" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-black tracking-tight uppercase">Initialize Transmission</h2>
-                  <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em]">Encrypted Data Entry Form</p>
-                </div>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Entity Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="IDENTIFY YOURSELF"
-                      required
-                      className="h-14 bg-white/[0.02] border-white/10 rounded-2xl focus:border-purple-500/50 transition-all font-bold tracking-tight text-white placeholder:text-white/10"
-                    />
-                  </div>
-                  <div className="space-y-3">
-                    <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Neural Address</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="USER@DOMAIN.COM"
-                      required
-                      className="h-14 bg-white/[0.02] border-white/10 rounded-2xl focus:border-purple-500/50 transition-all font-bold tracking-tight text-white placeholder:text-white/10"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <Label htmlFor="phone" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Audio Link (Optional)</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+91 XXXXXXXXXX"
-                      className="h-14 bg-white/[0.02] border-white/10 rounded-2xl focus:border-purple-500/50 transition-all font-bold tracking-tight text-white placeholder:text-white/10"
-                    />
-                  </div>
-                  <div className="space-y-3">
-                    <Label htmlFor="subject" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Protocol Header</Label>
-                    <Select value={formData.subject} onValueChange={handleSubjectChange} required>
-                      <SelectTrigger className="h-14 bg-white/[0.02] border-white/10 rounded-2xl focus:ring-0 focus:ring-offset-0 transition-all font-bold tracking-tight text-white">
-                        <SelectValue placeholder="Select Frequency" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#0f0f1a] border-white/10 text-white">
-                        <SelectItem value="general">GENERAL INQUIRY</SelectItem>
-                        <SelectItem value="courses">ACADEMIC MODULES</SelectItem>
-                        <SelectItem value="partnership">STRATEGIC ALLIANCE</SelectItem>
-                        <SelectItem value="technical">SYSTEMS SUPPORT</SelectItem>
-                        <SelectItem value="feedback">CORE FEEDBACK</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <Label htmlFor="message" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-1">Payload Content</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="ENTER YOUR TRANSMISSION..."
-                    rows={6}
-                    required
-                    className="bg-white/[0.02] border-white/10 rounded-2xl focus:border-purple-500/50 transition-all font-medium tracking-wide text-white/80 placeholder:text-white/10 resize-none p-6"
-                  />
-                </div>
-
-                <Button 
-                  className="w-full h-16 rounded-2xl bg-white text-black font-black uppercase tracking-[0.3em] text-[11px] hover:bg-purple-600 hover:text-white transition-all shadow-2xl disabled:opacity-50" 
-                  type="submit" 
-                  disabled={isLoading}
-                >
-                  {isLoading ? "TRANSMITTING..." : "DEPLOY SIGNAL"}
-                  <Send className="w-4 h-4 ml-2" />
-                </Button>
-              </form>
-            </GlowCard>
-          </div>
-
-          {/* Contact Information Sidebar */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="grid grid-cols-1 gap-6">
-              {contactInfo.map((info, idx) => (
-                <motion.div
-                  key={info.label}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <GlowCard className="p-5 md:p-6 h-full flex items-center gap-4 md:gap-6 group cursor-pointer" glowColor={info.color}>
-                    <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <info.icon className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <div>
-                      <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 mb-1">{info.label}</p>
-                      <p className="font-bold tracking-tight text-white group-hover:text-purple-400 transition-colors uppercase text-xs">{info.value}</p>
-                    </div>
-                  </GlowCard>
-                </motion.div>
+          <div className="mt-12 rounded-2xl border border-line bg-white/60 p-7">
+            <p className="eyebrow">What happens next</p>
+            <ol className="mt-5 space-y-4">
+              {["We review your inquiry and reply by email.", "We schedule a short discovery call.", "You receive a proposal with scope, timeline and cost."].map((t, i) => (
+                <li key={t} className="flex gap-4"><span className="font-serif text-lg italic text-accent">0{i + 1}</span><span className="text-[15px] text-ink/80">{t}</span></li>
               ))}
-            </div>
+            </ol>
+          </div>
+        </div>
 
-            <GlowCard className="p-10" glowColor="rgba(168, 85, 247, 0.2)">
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-8 text-white/40">Global Nodes</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {socials.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] hover:border-purple-500/30 transition-all group"
-                  >
-                    <social.icon className="w-5 h-5 text-white/40 group-hover:text-purple-400 group-hover:scale-110 transition-all" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/20 group-hover:text-white">{social.label}</span>
-                  </a>
-                ))}
+        <div id="inquiry" className="scroll-mt-24 lg:col-span-7">
+          <div className="rounded-3xl border border-line bg-white p-6 shadow-[0_40px_80px_-50px_rgba(23,23,23,.4)] sm:p-10">
+            {status === "success" ? (
+              <div className="py-16 text-center" role="status">
+                <CheckCircle2 size={56} strokeWidth={1.4} className="mx-auto text-accent" />
+                <h2 className="mt-6 text-4xl">Thank you, {f.name.split(" ")[0]}.</h2>
+                <p className="mx-auto mt-4 max-w-md text-lg text-muted">Your inquiry has been sent. We’ll reply to <strong className="text-ink">{f.email}</strong> soon.</p>
+                <Link to="/" className="btn-outline mt-10">Back to home</Link>
               </div>
-            </GlowCard>
-
-            <GlowCard className="p-10 relative overflow-hidden" glowColor="rgba(34, 197, 94, 0.1)">
-              <div className="relative z-10 text-center">
-                <Shield className="w-10 h-10 text-emerald-500 mx-auto mb-6 opacity-30" />
-                <h3 className="text-xs font-black uppercase tracking-widest mb-2">Protocol Verified</h3>
-                <p className="text-[10px] text-white/20 font-medium leading-relaxed">
-                  Encryption Layer 7 active. Signal integrity monitored by Zenera Core.
-                </p>
-              </div>
-            </GlowCard>
+            ) : (
+              <form onSubmit={onSubmit} noValidate className="space-y-6">
+                <h2 className="text-3xl">Project inquiry</h2>
+                <input type="text" tabIndex={-1} autoComplete="off" value={botField} onChange={(e) => setBotField(e.target.value)} className="hidden" aria-hidden="true" />
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div><label className="field-label" htmlFor="f-name">Full name *</label><input className="field" autoComplete="name" value={f.name} onChange={set("name")} {...a11y("name")} />{err("name")}</div>
+                  <div><label className="field-label" htmlFor="f-email">Business email *</label><input className="field" type="email" autoComplete="email" value={f.email} onChange={set("email")} {...a11y("email")} />{err("email")}</div>
+                  <div><label className="field-label" htmlFor="f-company">Company / organization</label><input className="field" autoComplete="organization" value={f.company} onChange={set("company")} {...a11y("company")} /></div>
+                  <div><label className="field-label" htmlFor="f-phone">Phone <span className="font-normal text-muted">(optional)</span></label><input className="field" type="tel" autoComplete="tel" value={f.phone} onChange={set("phone")} {...a11y("phone")} />{err("phone")}</div>
+                  <div><label className="field-label" htmlFor="f-service">Service required *</label>
+                    <select className="field" value={f.service} onChange={set("service")} {...a11y("service")}><option value="">Select a service</option>{services.map((s) => <option key={s.slug}>{s.title}</option>)}<option>Not sure yet</option></select>{err("service")}</div>
+                  <div><label className="field-label" htmlFor="f-industry">Industry</label>
+                    <select className="field" value={f.industry} onChange={set("industry")} {...a11y("industry")}><option value="">Select an industry</option>{industries.map((i) => <option key={i.slug}>{i.title}</option>)}<option>Other</option></select></div>
+                  <div><label className="field-label" htmlFor="f-budget">Estimated budget</label>
+                    <select className="field" value={f.budget} onChange={set("budget")} {...a11y("budget")}><option value="">Select a range</option>{budgets.map((b) => <option key={b}>{b}</option>)}</select></div>
+                  <div><label className="field-label" htmlFor="f-timeline">Preferred timeline</label>
+                    <select className="field" value={f.timeline} onChange={set("timeline")} {...a11y("timeline")}><option value="">Select a timeline</option>{timelines.map((t) => <option key={t}>{t}</option>)}</select></div>
+                </div>
+                <div><label className="field-label" htmlFor="f-message">Project description *</label><textarea className="field min-h-[140px] resize-y" value={f.message} onChange={set("message")} placeholder="What are you building, who is it for, and what does success look like?" {...a11y("message")} />{err("message")}</div>
+                <div>
+                  <label className="flex items-start gap-3 text-[15px] text-ink/80">
+                    <input type="checkbox" className="mt-1 h-4 w-4 accent-[#365CFF]" checked={f.consent} onChange={set("consent")} {...a11y("consent")} />
+                    <span>I agree to the <Link to="/privacy" className="underline hover:text-accent">privacy policy</Link> and consent to being contacted about my inquiry.</span>
+                  </label>
+                  {err("consent")}
+                </div>
+                {status === "error" && (
+                  <div role="alert" className="flex gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                    <AlertCircle size={18} className="shrink-0" />
+                    <span>Sorry, your message couldn’t be sent. Please try again, or email us directly at <a className="underline" href={`mailto:${site.email}`}>{site.email}</a>.</span>
+                  </div>
+                )}
+                <button type="submit" disabled={status === "sending"} className="btn-accent w-full !py-4 disabled:opacity-60 sm:w-auto">
+                  {status === "sending" ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : <>Send Inquiry <ArrowRight size={16} /></>}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
-};
-
-export default memo(Contact);
+}
