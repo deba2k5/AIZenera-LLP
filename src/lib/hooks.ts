@@ -13,6 +13,13 @@ export function useSeo(title: string, description?: string) {
       }
       m.setAttribute("content", description);
     }
+    let c = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!c) {
+      c = document.createElement("link");
+      c.rel = "canonical";
+      document.head.appendChild(c);
+    }
+    c.href = `https://aizenera.com${window.location.pathname === "/" ? "/" : window.location.pathname.replace(/\/$/, "")}`;
   }, [title, description]);
 }
 
