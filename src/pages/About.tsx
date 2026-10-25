@@ -89,16 +89,13 @@ export default function About() {
 
       <section className="section border-t border-line">
         <div className="container-site">
-          <div className="grid items-center gap-12 lg:grid-cols-12">
+          <div className="grid gap-12 lg:grid-cols-12">
             <div className="reveal lg:col-span-5">
-              <div className="reveal-img relative overflow-hidden rounded-3xl bg-sand shadow-[0_40px_80px_-50px_rgba(23,23,23,.5)]">
-                <img src="/images/founder.png" alt="Debangshu Chatterjee, Founder of AIZenera" loading="lazy" className="aspect-[4/5] w-full object-cover object-top" />
-              </div>
-            </div>
-            <div className="reveal lg:col-span-6 lg:col-start-7">
               <p className="eyebrow">The Founder</p>
               <h2 className="h-section mt-5">Debangshu Chatterjee</h2>
               <p className="mt-3 text-lg font-medium text-accent">Founder, {site.name}</p>
+            </div>
+            <div className="reveal lg:col-span-6 lg:col-start-7">
               <p className="mt-8 font-serif text-2xl leading-snug text-ink/80">
                 “Every business deserves a digital presence that works as hard as they do.”
               </p>

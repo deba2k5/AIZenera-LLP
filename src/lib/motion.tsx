@@ -81,7 +81,7 @@ export function Marquee({ items, className = "" }: { items: string[]; className?
   );
   return (
     <div className={`group flex overflow-hidden ${className}`}>
-      <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+      <div className="flex w-max animate-marquee py-[0.12em] leading-[1.35] group-hover:[animation-play-state:paused]">
         {row()}
         {row(true)}
       </div>

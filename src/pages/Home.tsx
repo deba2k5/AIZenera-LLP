@@ -56,7 +56,7 @@ export default function Home() {
       </section>
 
       {/* SERVICES TICKER */}
-      <section aria-label="Services we offer" className="border-y border-line py-7 font-serif text-3xl italic text-ink sm:py-9 sm:text-5xl">
+      <section aria-label="Services we offer" className="border-y border-line py-5 font-serif text-3xl italic text-ink sm:py-7 sm:text-5xl">
         <Marquee items={services.map((s) => s.title.replace(" & Digital Promotion", "").replace("Website ", ""))} />
       </section>
 

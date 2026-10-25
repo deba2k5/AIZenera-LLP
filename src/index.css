@@ -114,8 +114,8 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
-  padding: 0 0.08em 0.16em;
-  margin: 0 -0.08em -0.16em;
+  padding: 0.04em 0.1em 0.22em;
+  margin: -0.04em -0.1em -0.22em;
 }
 .sw-i {
   display: inline-block;
