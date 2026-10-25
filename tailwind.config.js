@@ -36,6 +36,10 @@ export default {
           "0%,100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-8px)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
         scrolldot: {
           "0%": { transform: "translateY(0)", opacity: "1" },
           "80%": { transform: "translateY(14px)", opacity: "0" },
@@ -43,6 +47,7 @@ export default {
         },
       },
       animation: {
+        marquee: "marquee 45s linear infinite",
         rise: "rise 0.9s cubic-bezier(.2,.7,.2,1) both",
         float: "float 6s ease-in-out infinite",
         scrolldot: "scrolldot 1.8s ease-in-out infinite",

@@ -7,6 +7,7 @@ import { industries } from "../data/industries";
 import { projects, projectCategories } from "../data/projects";
 import { SectionHeading, ServiceCard, IndustryCard, ProjectCard, CTASection } from "../components/ui";
 import { site } from "../config/site";
+import { SplitText, Parallax, Marquee } from "../lib/motion";
 
 export const steps = [
   { n: "01", t: "Discover", d: "Understand the client, audience, objectives, requirements, and budget." },
@@ -25,12 +26,13 @@ export default function Home() {
     <div ref={ref}>
       {/* HERO */}
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+        <div className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-accent/10 blur-3xl animate-[float_12s_ease-in-out_infinite]" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-[#8E5BFF]/10 blur-3xl animate-[float_16s_ease-in-out_infinite]" />
         <div className="container-site grid items-center gap-12 pb-16 pt-10 sm:pt-16 lg:grid-cols-12 lg:gap-10 lg:pb-24">
           <div className="lg:col-span-6">
             <p className="eyebrow animate-rise [animation-delay:.05s]">Digital Strategy · Design · Technology</p>
-            <h1 className="h-display mt-5 animate-rise [animation-delay:.1s]">
-              Your next big idea deserves a <em className="text-accent">better</em> digital home.
+            <h1 className="reveal h-display mt-5">
+              <SplitText delay={150} step={70}>Your next big idea deserves a <em className="text-accent">better</em> digital home.</SplitText>
             </h1>
             <p className="lead mt-7 max-w-xl animate-rise [animation-delay:.18s]">
               We design and engineer websites, web applications, brand experiences and AI-powered systems — and advise on the technology that ties them together.
@@ -42,13 +44,20 @@ export default function Home() {
           </div>
 
           <div className="relative animate-rise [animation-delay:.2s] lg:col-span-6">
-            <div className="relative overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(23,23,23,.55)]">
-              <img src="/images/hero.jpg" alt="A person working on a laptop on a hilltop beneath a vast glowing screen at dusk" className="aspect-[4/3] w-full object-cover sm:aspect-[16/11]" fetchPriority="high" />
+            <div className="reveal-img relative aspect-[4/3] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(23,23,23,.55)] sm:aspect-[16/11]">
+              <Parallax speed={0.1}>
+                <img src="/images/hero.jpg" alt="A person working on a laptop on a hilltop beneath a vast glowing screen at dusk" className="h-full w-full object-cover" fetchPriority="high" />
+              </Parallax>
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               <p className="absolute bottom-5 left-5 right-5 font-serif text-lg italic text-white/90 sm:text-xl">“Where ideas meet the screen.”</p>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* SERVICES TICKER */}
+      <section aria-label="Services we offer" className="border-y border-line py-7 font-serif text-3xl italic text-ink sm:py-9 sm:text-5xl">
+        <Marquee items={services.map((s) => s.title.replace(" & Digital Promotion", "").replace("Website ", ""))} />
       </section>
 
       {/* CAPABILITIES STRIP */}
@@ -74,8 +83,10 @@ export default function Home() {
             </p>
           </div>
           <div className="lg:col-span-6 lg:pt-16">
-            <div className="reveal relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-black">
-              <img src="/images/about.jpg" alt="Two dotted hands reaching toward a projects folder" loading="lazy" className="h-full w-full object-cover" />
+            <div className="reveal-img relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-black">
+              <Parallax speed={0.14}>
+                <img src="/images/about.jpg" alt="Two dotted hands reaching toward a projects folder" loading="lazy" className="h-full w-full object-cover" />
+              </Parallax>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">
                 <p className="font-serif text-2xl italic">Engineering × Design × Strategy</p>

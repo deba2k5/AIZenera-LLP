@@ -12,6 +12,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
+import { ScrollProgress } from "./lib/motion";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -29,6 +30,7 @@ function Layout() {
   return (
     <>
       <ScrollManager />
+      <ScrollProgress />
       <Navbar />
       <main id="main">
         <Outlet />

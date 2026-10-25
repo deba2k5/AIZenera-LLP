@@ -22,7 +22,7 @@ export function useReveal<T extends HTMLElement>() {
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    const els = root.querySelectorAll<HTMLElement>(".reveal");
+    const els = root.querySelectorAll<HTMLElement>(".reveal:not(.is-visible), .reveal-img:not(.is-visible)");
     if (!("IntersectionObserver" in window)) {
       els.forEach((e) => e.classList.add("is-visible"));
       return;

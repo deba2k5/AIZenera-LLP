@@ -109,6 +109,39 @@
   transform: none;
 }
 
+/* Word-by-word headline reveal */
+.sw {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.08em 0.16em;
+  margin: 0 -0.08em -0.16em;
+}
+.sw-i {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.is-visible .sw-i,
+.sw-i.is-visible {
+  transform: none;
+}
+
+/* Image curtain reveal */
+.reveal-img {
+  clip-path: inset(10% 10% 10% 10% round 28px);
+  transition: clip-path 1.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal-img.is-visible {
+  clip-path: inset(-20% -20% -20% -20% round 0px);
+}
+
+/* Outlined text for the ticker */
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px #171717;
+}
+
 .grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
@@ -127,5 +160,11 @@
   .reveal {
     opacity: 1;
     transform: none;
+  }
+  .sw-i {
+    transform: none;
+  }
+  .reveal-img {
+    clip-path: none;
   }
 }

@@ -91,7 +91,7 @@ export default function About() {
         <div className="container-site">
           <div className="grid items-center gap-12 lg:grid-cols-12">
             <div className="reveal lg:col-span-5">
-              <div className="relative overflow-hidden rounded-3xl bg-sand shadow-[0_40px_80px_-50px_rgba(23,23,23,.5)]">
+              <div className="reveal-img relative overflow-hidden rounded-3xl bg-sand shadow-[0_40px_80px_-50px_rgba(23,23,23,.5)]">
                 <img src="/images/founder.png" alt="Debangshu Chatterjee, Founder of AIZenera" loading="lazy" className="aspect-[4/5] w-full object-cover object-top" />
               </div>
             </div>

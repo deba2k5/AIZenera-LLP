@@ -3,12 +3,13 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Service } from "../data/services";
 import type { Industry } from "../data/industries";
 import type { Project } from "../data/projects";
+import { SplitText, Parallax } from "../lib/motion";
 
 export function SectionHeading({ eyebrow, title, intro, center = false, light = false }: { eyebrow?: string; title: React.ReactNode; intro?: string; center?: boolean; light?: boolean }) {
   return (
     <div className={`reveal max-w-3xl ${center ? "mx-auto text-center" : ""}`}>
       {eyebrow && <p className={`eyebrow ${light ? "!text-white/50" : ""}`}>{eyebrow}</p>}
-      <h2 className={`h-section mt-5 ${light ? "text-ivory" : ""}`}>{title}</h2>
+      <h2 className={`h-section mt-5 ${light ? "text-ivory" : ""}`}><SplitText delay={120}>{title}</SplitText></h2>
       {intro && <p className={`lead mt-6 ${light ? "!text-white/60" : ""}`}>{intro}</p>}
     </div>
   );
@@ -17,10 +18,10 @@ export function SectionHeading({ eyebrow, title, intro, center = false, light = 
 export function PageHero({ eyebrow, title, intro, children }: { eyebrow: string; title: React.ReactNode; intro?: string; children?: React.ReactNode }) {
   return (
     <section className="relative overflow-hidden border-b border-line">
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-gradient-to-br from-accent/15 via-[#8E5BFF]/10 to-transparent blur-3xl" />
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-gradient-to-br from-accent/15 via-[#8E5BFF]/10 to-transparent blur-3xl animate-[float_14s_ease-in-out_infinite]" />
       <div className="container-site relative pb-20 pt-16 sm:pb-24 sm:pt-24">
         <p className="eyebrow animate-rise">{eyebrow}</p>
-        <h1 className="h-display mt-6 max-w-5xl animate-rise [animation-delay:.08s]">{title}</h1>
+        <h1 className="reveal h-display mt-6 max-w-5xl"><SplitText delay={100} step={70}>{title}</SplitText></h1>
         {intro && <p className="lead mt-8 max-w-2xl animate-rise [animation-delay:.16s]">{intro}</p>}
         {children && <div className="mt-10 animate-rise [animation-delay:.24s]">{children}</div>}
       </div>
@@ -181,11 +182,15 @@ export function ProjectCard({ p }: { p: Project }) {
 export function CTASection({ title = "Have an idea worth building?", text = "Tell us what you’re planning. We’ll help you find the right digital solution." }: { title?: string; text?: string }) {
   return (
     <section className="relative isolate overflow-hidden bg-night text-ivory">
-      <img src="/images/hero.jpg" alt="" loading="lazy" className="absolute inset-0 -z-10 h-full w-full object-cover object-bottom opacity-70" />
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <Parallax speed={0.18}>
+          <img src="/images/hero.jpg" alt="" loading="lazy" className="h-full w-full object-cover object-bottom opacity-70" />
+        </Parallax>
+      </div>
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/60 to-night/30" />
       <div className="container-site section reveal text-center">
         <p className="eyebrow justify-center !text-white/60">Start a conversation</p>
-        <h2 className="mx-auto mt-6 max-w-4xl font-serif text-5xl leading-[1.04] sm:text-6xl lg:text-7xl">{title}</h2>
+        <h2 className="mx-auto mt-6 max-w-4xl font-serif text-5xl leading-[1.04] sm:text-6xl lg:text-7xl"><SplitText delay={150} step={70}>{title}</SplitText></h2>
         <p className="mx-auto mt-6 max-w-xl text-lg text-white/70">{text}</p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Link to="/contact" className="btn-accent">Start Your Project <ArrowRight size={16} /></Link>
