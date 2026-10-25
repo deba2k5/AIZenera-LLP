@@ -28,11 +28,7 @@ export default function Home() {
         <div className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
         <div className="container-site grid items-center gap-12 pb-16 pt-10 sm:pt-16 lg:grid-cols-12 lg:gap-10 lg:pb-24">
           <div className="lg:col-span-6">
-            <p className="inline-flex animate-rise items-center gap-2 rounded-full border border-line bg-white/70 px-3.5 py-1.5 text-[13px] text-ink/80">
-              <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" /><span className="relative h-2 w-2 rounded-full bg-emerald-500" /></span>
-              Available for select projects
-            </p>
-            <p className="eyebrow mt-8 animate-rise [animation-delay:.05s]">Digital Strategy · Design · Technology</p>
+            <p className="eyebrow animate-rise [animation-delay:.05s]">Digital Strategy · Design · Technology</p>
             <h1 className="h-display mt-5 animate-rise [animation-delay:.1s]">
               Your next big idea deserves a <em className="text-accent">better</em> digital home.
             </h1>
