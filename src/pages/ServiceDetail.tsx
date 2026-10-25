@@ -21,6 +21,7 @@ export default function ServiceDetail() {
       <PageHero eyebrow="Service" title={s.title} intro={s.intro}>
         <div className="flex flex-wrap gap-3">
           <Link to={`/contact?service=${s.slug}`} className="btn-primary">Start a Project <ArrowRight size={16} /></Link>
+          {s.slug === "ai-courses" && <Link to="/courses" className="btn-accent">View Courses <ArrowRight size={16} /></Link>}
           <Link to="/services" className="btn-outline"><ArrowLeft size={16} /> All Services</Link>
         </div>
       </PageHero>

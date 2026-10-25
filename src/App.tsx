@@ -10,6 +10,7 @@ import Industries from "./pages/Industries";
 import Work from "./pages/Work";
 import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
+import Courses from "./pages/Courses";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 import { ScrollProgress } from "./lib/motion";
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/industries" element={<Industries />} />
         <Route path="/work" element={<Work />} />
         <Route path="/work/:slug" element={<ProjectDetail />} />
+        <Route path="/courses" element={<Courses />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Legal kind="privacy" />} />
         <Route path="/terms" element={<Legal kind="terms" />} />

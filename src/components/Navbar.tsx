@@ -10,6 +10,7 @@ export const navLinks = [
   { to: "/services", label: "Services" },
   { to: "/industries", label: "Industries" },
   { to: "/work", label: "Our Work" },
+  { to: "/courses", label: "AI Courses" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -53,14 +54,14 @@ export default function Navbar() {
       </a>
       <nav className="container-site flex h-[72px] items-center justify-between" aria-label="Main">
         <Logo />
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-0.5 xl:flex">
           {navLinks.map((l) => (
             <li key={l.to}>
               <NavLink
                 to={l.to}
                 end={l.to === "/"}
                 className={({ isActive }) =>
-                  `relative rounded-full px-4 py-2 text-[15px] transition-colors ${
+                  `relative rounded-full px-3.5 py-2 text-[15px] transition-colors ${
                     isActive ? "text-ink after:absolute after:bottom-0.5 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-accent" : "text-ink/60 hover:text-ink"
                   }`
                 }
@@ -76,7 +77,7 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line xl:hidden"
             aria-label="Open menu"
             aria-expanded={open}
             aria-controls="mobile-nav"
@@ -89,7 +90,7 @@ export default function Navbar() {
     </header>
 
       {/* Mobile panel (outside the header so it is never clipped by the header's blur/slide) */}
-      <div className={`fixed inset-0 z-50 lg:hidden ${open ? "" : "pointer-events-none"}`} aria-hidden={!open}>
+      <div className={`fixed inset-0 z-50 xl:hidden ${open ? "" : "pointer-events-none"}`} aria-hidden={!open}>
         <div className={`absolute inset-0 bg-ink/40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`} onClick={() => setOpen(false)} />
         <div
           id="mobile-nav"

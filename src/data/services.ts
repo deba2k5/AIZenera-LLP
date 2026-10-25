@@ -1,4 +1,4 @@
-import { Code2, LayoutTemplate, Palette, Sparkles, Store, Network, Bot, type LucideIcon } from "lucide-react";
+import { Code2, LayoutTemplate, Palette, Sparkles, Store, Network, Bot, GraduationCap, type LucideIcon } from "lucide-react";
 
 export type Service = {
   slug: string;
@@ -135,6 +135,24 @@ export const services: Service[] = [
     faqs: [
       { q: "Is my data safe?", a: "We design around your data policies, choose providers carefully and keep sensitive data out of places it shouldn't go." },
       { q: "Can we start small?", a: "Yes — we recommend starting with one high-value use case and a prototype before scaling." },
+    ],
+  },
+  {
+    slug: "ai-courses",
+    title: "AI Courses & Training",
+    short: "Hands-on AI courses and workshops for students, professionals, teams and institutions.",
+    icon: GraduationCap,
+    intro: "Practical AI education — from your first prompt to building AI-powered applications.",
+    problem: "AI is changing how people study and work, but most learning material is either too theoretical or too shallow to apply. Teams and students need practical skills they can use right away.",
+    capabilities: ["AI foundations", "Prompt engineering & GenAI tools", "Python & machine learning", "Building apps with LLMs", "AI workflow automation", "Custom team & institutional training"],
+    deliverables: ["Structured course curriculum", "Hands-on projects & exercises", "Learning resources", "Live sessions & doubt clearing", "Custom programs for organisations"],
+    tags: ["Generative AI", "Prompting", "Python", "Machine Learning", "LLM APIs", "Automation"],
+    projectTypes: ["Individual courses", "College workshops", "Corporate training", "Bootcamps"],
+    clients: ["Students", "Working professionals", "Companies, colleges & schools"],
+    faqs: [
+      { q: "Do I need coding experience?", a: "Not for the beginner tracks. Coding is introduced only in the intermediate and advanced courses." },
+      { q: "Can you train our whole team or institution?", a: "Yes — we design custom workshops and programs around your goals, schedule and skill levels." },
+      { q: "How do I find out about batches and fees?", a: "Send an enquiry and we'll share upcoming batches, formats and fees." },
     ],
   },
 ];

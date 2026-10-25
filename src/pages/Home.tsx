@@ -109,9 +109,9 @@ export default function Home() {
           </div>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => <ServiceCard key={s.slug} s={s} index={i} />)}
-            <Link to="/contact" className="reveal group flex flex-col justify-between rounded-2xl bg-accent p-8 text-white transition-colors hover:bg-accent-dark sm:col-span-2 lg:col-span-2">
+            <Link to="/contact" className="reveal group flex flex-col justify-between rounded-2xl bg-accent p-8 text-white transition-colors hover:bg-accent-dark sm:col-span-2 lg:col-span-1">
               <p className="text-[11px] font-semibold uppercase tracking-label text-white/70">Not sure where to start?</p>
-              <p className="mt-6 max-w-md font-serif text-3xl leading-tight sm:text-4xl">Tell us the problem — we’ll recommend the right solution.</p>
+              <p className="mt-6 max-w-md font-serif text-3xl leading-tight">Tell us the problem — we’ll recommend the right solution.</p>
               <span className="mt-8 inline-flex items-center gap-2 font-medium">Book a free consultation <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></span>
             </Link>
           </div>
