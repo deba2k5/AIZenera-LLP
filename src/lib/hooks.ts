@@ -1,26 +1,43 @@
 import { useEffect, useRef } from "react";
 import { site } from "../config/site";
 
-export function useSeo(title: string, description?: string) {
+export const SITE_URL = "https://aizenera.com";
+const HOME_TITLE = `${site.name} — Web Development, Design, AI & IT Consulting Agency`;
+
+function setMeta(attr: "name" | "property", key: string, value: string) {
+  let m = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+  if (!m) {
+    m = document.createElement("meta");
+    m.setAttribute(attr, key);
+    document.head.appendChild(m);
+  }
+  m.setAttribute("content", value);
+}
+
+/** Sets the page title, description, canonical URL and social-preview tags. */
+export function useSeo(title: string, description?: string, opts: { noindex?: boolean } = {}) {
   useEffect(() => {
-    document.title = title ? `${title} | ${site.name}` : `${site.name} — Digital Solutions & IT Consulting`;
+    const fullTitle = title ? `${title} | ${site.name}` : HOME_TITLE;
+    const path = window.location.pathname === "/" ? "/" : window.location.pathname.replace(/\/$/, "");
+    const url = `${SITE_URL}${path}`;
+    document.title = fullTitle;
     if (description) {
-      let m = document.querySelector('meta[name="description"]');
-      if (!m) {
-        m = document.createElement("meta");
-        m.setAttribute("name", "description");
-        document.head.appendChild(m);
-      }
-      m.setAttribute("content", description);
+      setMeta("name", "description", description);
+      setMeta("property", "og:description", description);
+      setMeta("name", "twitter:description", description);
     }
-    let c = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    setMeta("property", "og:title", fullTitle);
+    setMeta("name", "twitter:title", fullTitle);
+    setMeta("property", "og:url", url);
+    setMeta("name", "robots", opts.noindex ? "noindex, follow" : "index, follow, max-image-preview:large");
+    let c = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!c) {
       c = document.createElement("link");
       c.rel = "canonical";
       document.head.appendChild(c);
     }
-    c.href = `https://aizenera.com${window.location.pathname === "/" ? "/" : window.location.pathname.replace(/\/$/, "")}`;
-  }, [title, description]);
+    c.href = url;
+  }, [title, description, opts.noindex]);
 }
 
 /** Adds .is-visible to every .reveal element inside the returned ref when it scrolls into view. */

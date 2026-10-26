@@ -85,7 +85,7 @@ export default function Home() {
           <div className="lg:col-span-6 lg:pt-16">
             <div className="reveal-img relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-black">
               <Parallax speed={0.14}>
-                <img src="/images/about.jpg" alt="Two dotted hands reaching toward a projects folder" loading="lazy" className="h-full w-full object-cover" />
+                <img src="/images/about.webp" alt="Two dotted hands reaching toward a projects folder" loading="lazy" className="h-full w-full object-cover" />
               </Parallax>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">

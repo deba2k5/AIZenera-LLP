@@ -15,7 +15,7 @@ export type Industry = {
 export const industries: Industry[] = [
   {
     slug: "cafes-restaurants",
-    image: "/images/industries/cafes.jpg",
+    image: "/images/industries/cafes.webp",
     title: "Cafés & Restaurants",
     short: "Digital menus, location, reservations and ordering — everything hungry customers look for first.",
     icon: Coffee,
@@ -26,7 +26,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "schools-education",
-    image: "/images/industries/schools.jpg",
+    image: "/images/industries/schools.webp",
     title: "Schools & Education",
     short: "Admissions, notices, events, academic resources and clear parent communication.",
     icon: GraduationCap,
@@ -37,7 +37,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "enterprises",
-    image: "/images/industries/enterprises.jpg",
+    image: "/images/industries/enterprises.webp",
     title: "Enterprises & Corporates",
     short: "Corporate websites, lead generation, integrations and scalable architecture.",
     icon: Building2,
@@ -48,7 +48,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "events-communities",
-    image: "/images/industries/events.png",
+    image: "/images/industries/events.webp",
     title: "Events & Communities",
     short: "Event landing pages, registrations, schedules, sponsor showcases and creative branding.",
     icon: CalendarDays,
@@ -59,7 +59,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "startups-tech",
-    image: "/images/industries/startups.jpg",
+    image: "/images/industries/startups.webp",
     title: "Startups & Technology",
     short: "MVPs, product websites, dashboards and AI features built to move at startup speed.",
     icon: Rocket,
@@ -70,7 +70,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "retail-local",
-    image: "/images/industries/retail.jpg",
+    image: "/images/industries/retail.webp",
     title: "Retail & Local Businesses",
     short: "Online catalogues, stores, local SEO and branding that brings people through the door.",
     icon: ShoppingBag,
