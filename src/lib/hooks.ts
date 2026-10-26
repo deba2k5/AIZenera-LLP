@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "../config/site";
 
 export const SITE_URL = "https://aizenera.com";
@@ -65,4 +65,23 @@ export function useReveal<T extends HTMLElement>() {
     return () => io.disconnect();
   });
   return ref;
+}
+
+const COUNTER_URL = "https://abacus.jasoncameron.dev";
+
+/** Total visit count. Counts once per browser session; null until loaded or if the counter is unreachable. */
+export function useVisitorCount() {
+  const [count, setCount] = useState<number | null>(null);
+  useEffect(() => {
+    let seen = false;
+    try { seen = sessionStorage.getItem("az-counted") === "1"; } catch { /* storage blocked */ }
+    fetch(`${COUNTER_URL}/${seen ? "get" : "hit"}/aizenera.com/visits`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d: { value?: number }) => {
+        if (typeof d.value === "number") setCount(d.value);
+        try { sessionStorage.setItem("az-counted", "1"); } catch { /* storage blocked */ }
+      })
+      .catch(() => {});
+  }, []);
+  return count;
 }

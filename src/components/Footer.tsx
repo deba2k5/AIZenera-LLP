@@ -5,9 +5,11 @@ import { site } from "../config/site";
 import { services } from "../data/services";
 import { industries } from "../data/industries";
 import { navLinks } from "./Navbar";
+import { useVisitorCount } from "../lib/hooks";
 
 export default function Footer() {
   const socials = site.socials.filter((s) => s.url);
+  const visits = useVisitorCount();
   return (
     <footer className="bg-night text-white/60">
       <div className="container-site pt-20">
@@ -52,7 +54,10 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-4 border-t border-white/10 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            {visits !== null && <span className="ml-3 text-white/40">· {visits.toLocaleString("en-IN")} visits</span>}
+          </p>
           <div className="flex gap-6">
             <Link to="/privacy" className="hover:text-ivory">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-ivory">Terms &amp; Conditions</Link>
